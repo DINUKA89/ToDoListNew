@@ -1,0 +1,34 @@
+<h2 style="margin-bottom: 0px;">{{data.title}}</h2>
+<h4>{{data.subTitle}}</h4>
+
+<form [formGroup]="formGroup">
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="First Name" formControlName="firstName"> 
+        <mat-error *ngIf="formGroup.get('firstName')!.hasError('required')">
+            Please fill out the field.
+        </mat-error> 
+      </mat-form-field>
+    
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Last Name" formControlName="lastName"> 
+        <mat-error *ngIf="formGroup.get('lastName')!.hasError('required')">
+            Please fill out the field.
+        </mat-error>
+      </mat-form-field>
+    
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email"> 
+        <mat-error *ngIf="formGroup.get('email')!.hasError('required')">
+            Please fill out the field.
+        </mat-error>
+        <mat-error *ngIf="formGroup.get('email')!.hasError('pattern')">
+            Invalid email address.
+        </mat-error>
+      </mat-form-field>
+</form>
+
+ 
+  <button mat-flat-button color="primary" style="float: right;" (click)="Submit()">Submit</button>

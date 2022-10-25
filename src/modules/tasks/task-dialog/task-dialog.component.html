@@ -1,0 +1,93 @@
+<h2 style="margin-bottom: 0px;">{{data.title}}</h2>
+<h4>{{data.subTitle}}</h4>
+
+<form [formGroup]="formGroup">
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name"> 
+        <mat-error *ngIf="formGroup.get('name')!.hasError('required')">
+            Please fill out the field.
+        </mat-error> 
+      </mat-form-field>
+    
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description" formControlName="description"> 
+        <mat-error *ngIf="formGroup.get('description')!.hasError('required')">
+            Please fill out the field.
+        </mat-error>
+      </mat-form-field> 
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Employee</mat-label>
+        <input type="text"
+               placeholder="Select Employee" 
+               matInput
+               formControlName="employee"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFrom">
+          <mat-option *ngFor="let option of employeeList" [value]="option">
+            {{option.firstName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Assign Date</mat-label>
+        <input matInput [matDatepicker]="datepicker" formControlName="assignDate">
+        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Completion Date</mat-label>
+        <input matInput [matDatepicker]="datepicker1" formControlName="completionDate">
+        <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker1>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Assign Date</mat-label>
+        <input matInput formControlName="assignDate">
+        <mat-error *ngIf="formGroup.get('assignDate')!.hasError('required')">
+            Please fill out the field.
+        </mat-error>
+        <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
+        <mat-datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Completion Date</mat-label>
+        <input matInput formControlName="completionDate">
+        <mat-error *ngIf="formGroup.get('completionDate')!.hasError('required')">
+            Please fill out the field.
+        </mat-error>
+        <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
+        <mat-datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field> -->
+    
+       
+</form>
+
+ 
+  <button mat-flat-button color="primary" style="float: right;" (click)="Submit()">Submit</button>
