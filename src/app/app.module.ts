@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TasksComponent } from "../modules/tasks/tasks.component";
 import { TaskDialogComponent } from "../modules/tasks/task-dialog/task-dialog.component";
-import { EmployeeComponent } from "../modules/employee/employee.component";
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,7 +23,14 @@ import {MatTableModule} from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { HttpClientModule } from '@angular/common/http';
-import { EmployeeDialogComponent } from 'src/modules/employee/employee-dialog/employee-dialog.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { LoginComponent } from 'src/modules/login/login.component';
+
+import {SocialLoginModule, SocialAuthServiceConfig} from '@abacritt/angularx-social-login';
+import {GoogleLoginProvider} from '@abacritt/angularx-social-login';
 
 
 @NgModule({
@@ -32,8 +38,7 @@ import { EmployeeDialogComponent } from 'src/modules/employee/employee-dialog/em
     AppComponent,
     TasksComponent,
     TaskDialogComponent,
-    EmployeeComponent,
-    EmployeeDialogComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -53,10 +58,26 @@ import { EmployeeDialogComponent } from 'src/modules/employee/employee-dialog/em
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
-    MatAutocompleteModule
-
+    MatAutocompleteModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore()),
+    SocialLoginModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('378590442026-8ietf5kngofr9ncm9ms9241ceovkpted.apps.googleusercontent.com'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

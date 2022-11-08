@@ -1,0 +1,15 @@
+<div class="container">
+    <mat-card class="cardcss">
+        <mat-card-title style="text-align: center;">Login</mat-card-title>
+        <mat-card-subtitle style="text-align: center;">Please login via Google</mat-card-subtitle>
+        <asl-google-signin-button type="standard" size="large" (click)="LogInWithGoogle()"></asl-google-signin-button>
+        <!-- <button button mat-flat-button (click)="LogInWithGoogle()">Logout</button> -->
+        <mat-card class="cardcss1">
+            <img mat-card-image style="width: 100px; height: 100px;" src="{{user.photoUrl}}">
+            <h2>{{user.name}}</h2>
+            <h2>{{user.email}}</h2>
+            <h4>{{user.id}}</h4>
+        </mat-card>
+        <button button mat-flat-button (click)="LogOut()">Logout</button>
+    </mat-card>
+</div>

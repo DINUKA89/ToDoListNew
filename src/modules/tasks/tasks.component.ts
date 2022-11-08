@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { map } from 'rxjs';
 import { Tasks } from 'src/models/task';
 import { TaskService } from 'src/services/task.service';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
@@ -14,6 +15,9 @@ export class TasksComponent implements OnInit {
   displayedColumns: string[] = ['Name', 'Description', 'AssignDate', 'CompletionDate','FirstName','Actions'];
   dataSource!: Tasks[];
 
+  @Output() refreshList: EventEmitter<any> = new EventEmitter();
+  message = '';
+
   constructor(
     public dialog: MatDialog,
     private service: TaskService
@@ -24,21 +28,27 @@ export class TasksComponent implements OnInit {
   }
 
   fillData() {
-    this.service.GetAllTask().subscribe(
-      (data: any) => { 
-        debugger;
-        this.dataSource = data.result;
-      });
+
+    this.service.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe((data: any) => { 
+      debugger;
+      this.dataSource = data.result;
+    });
+    
   }
 
-  deleteTask(id:number){
-    this.service.DeleteTask(id).subscribe(
-      (result: any) => {
-        alert("Delete Successfully !");
-      },
-      (error: any) => {
-        console.log(error);
-      });
+  deleteTask(id:string){
+    this.service.delete(id)
+    .then(() => {
+      this.refreshList.emit();
+      this.message = 'The tutorial was updated successfully!';
+    })
+    .catch(err => console.log(err));
       location.reload();
       this.fillData();
   }
@@ -57,7 +67,6 @@ export class TasksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
 
       this.fillData();
     });
@@ -76,7 +85,6 @@ export class TasksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
 
       this.fillData();
     });

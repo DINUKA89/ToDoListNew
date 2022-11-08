@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "to-do-list-app-3e522": {
+      "hosting": {
+        "Task-Assign": [
+          "to-do-list-app-3e522"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "to-do-list-app-3e522"
+  }
+}
