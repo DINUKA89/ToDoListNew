@@ -1,0 +1,72 @@
+<h2 style="margin-bottom: 0px;">{{dt.title}}</h2>
+<h4>{{dt.subTitle}}</h4>
+
+<form class="example-form" [formGroup]="formGroup">
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" autocomplete="off">  
+        <mat-error *ngIf="formGroup.get('name')!.hasError('required')">
+            Please fill out the field.
+        </mat-error> 
+      </mat-form-field>
+    
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description" formControlName="description" autocomplete="off"> 
+        <mat-error *ngIf="formGroup.get('description')!.hasError('required')">
+            Please fill out the field.
+        </mat-error>
+      </mat-form-field> 
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Assign Date</mat-label>
+        <input matInput [matDatepicker]="datepicker" formControlName="assignDate" autocomplete="off">
+        <mat-error *ngIf="formGroup.get('assignDate')!.hasError('required')">
+          Please fill out the field.
+      </mat-error>
+        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Completion Date</mat-label>
+        <input matInput [matDatepicker]="datepicker1" formControlName="completionDate" autocomplete="off">
+        <mat-error *ngIf="formGroup.get('completionDate')!.hasError('required')">
+          Please fill out the field.
+      </mat-error>
+        <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker1>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <section class="example-section">
+        <label class="example-margin">Progress:</label>
+        <mat-radio-group formControlName="progress">
+          <mat-radio-button class="example-margin" value="In-Progress">In-Progress</mat-radio-button>
+          <mat-radio-button class="example-margin" value="Completed">Completed</mat-radio-button>
+          <mat-error *ngIf="formGroup.get('progress')!.hasError('required')">
+            Please fill out the field.
+        </mat-error>
+        </mat-radio-group>
+      </section>
+   
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Comments</mat-label>
+        <input matInput placeholder="Comments" formControlName="comments" autocomplete="off"> 
+        <mat-error *ngIf="formGroup.get('comments')!.hasError('required')">
+            Please fill out the field.
+        </mat-error>
+      </mat-form-field>  
+</form>
+
+ 
+  <button mat-flat-button color="primary" style="float: right;" (click)="Submit()">Submit</button>
